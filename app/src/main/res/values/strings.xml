@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NeoXignaDemo</string>
+    <string name="default_error_msg">Ha ocurrido un error inesperado</string>
+    <string name="Sign">Firmar</string>
+    <string name="intro_message">Esta demo le muestra como ejecutar una validación de una persona, mediante la firma de un XML</string>
+    <string name="document_not_signed">No se efectuó la firma</string>
+    <string name="document_signed">Firma exitosa: </string>
+</resources>
