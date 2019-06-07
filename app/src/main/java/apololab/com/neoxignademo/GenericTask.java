@@ -3,6 +3,7 @@ package apololab.com.neoxignademo;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -44,6 +45,7 @@ public abstract class GenericTask extends AsyncTask<Void,Void,String> {
                 result = Utils.streamToString( connection.getErrorStream() );
             }
         } catch (Exception ex){
+            Log.e("NEOXIGNADEMO","Error calling neoxigna url :"+url,ex);
             this.error = true;
             result = context.getResources().getString(R.string.default_error_msg);
         }

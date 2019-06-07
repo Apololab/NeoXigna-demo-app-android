@@ -2,13 +2,16 @@ package apololab.com.neoxignademo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -22,12 +25,14 @@ public class MainActivity extends AppCompatActivity {
     static final String DEMO_WEB_URL = "https://neoxignademo.azurewebsites.net/";
     static final String PATH_PREPARE_XML = "AppApi/XML";
     static final String PATH_CHECK_SIGNED = "AppApi/IsSigned";
+    static final String NEOXIGNA_BUNDLE_ID = "com.apololab.neoxigna";
 
     static final int NEOXIGNA_INVOKE_CODE = 1986;
 
     static final String SIGNING = "1";
     static final String NOT_SIGNED = "0";
     Button btnStart;
+    TextView lblNeoXignaNotInstalled;
     View pnlContent;
     View pgrLoading;
 
@@ -40,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
         btnStart = findViewById(R.id.btnStart);
         pnlContent = findViewById(R.id.pnlContent);
         pgrLoading = findViewById(R.id.pgrLoading);
+        lblNeoXignaNotInstalled = findViewById(R.id.lblNeoXignaNotInstalled);
+
+
+        // Se revisa que NeoXigna se encuentre instalado, esto es importante ya que al intentar abrir el URI para firmar ocurre una excepción en caso de que NeoXigna no esté instalado
+        boolean neoxignaInstalled=  isNeoXignaInstalled();
+        lblNeoXignaNotInstalled.setVisibility( neoxignaInstalled ? View.INVISIBLE : View.VISIBLE );
+        btnStart.setEnabled( neoxignaInstalled );
+
         btnStart.setOnClickListener((view)-> startSignature() );
     }
 
@@ -114,6 +127,17 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.setLoading(loading);
             }
         }.execute();
+    }
+
+    private boolean isNeoXignaInstalled(){
+        PackageManager pm = this.getApplicationContext().getPackageManager();
+        try {
+            pm.getPackageInfo(NEOXIGNA_BUNDLE_ID, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.d("Tag",NEOXIGNA_BUNDLE_ID + " not installed");
+            return false;
+        }
     }
 
     static {

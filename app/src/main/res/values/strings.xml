@@ -5,4 +5,5 @@
     <string name="intro_message">Esta demo le muestra como ejecutar una validación de una persona, mediante la firma de un XML</string>
     <string name="document_not_signed">No se efectuó la firma</string>
     <string name="document_signed">Firma exitosa: </string>
+    <string name="neoxigna_not_installed">NeoXigna no está instalado en este dispositivo</string>
 </resources>
